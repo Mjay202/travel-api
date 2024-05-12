@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tour;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,9 +16,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        Tour::factory(10)->create(['travel_id' => '9c0474d7-a131-4fb7-9523-2180b4e6a122']);
     }
 }
