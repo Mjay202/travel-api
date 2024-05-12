@@ -36,7 +36,7 @@ class TravelsListTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');  
-        $response->assertJsonPath('data.0.id', $publicTravel->id);  
+        $response->assertJsonPath('data.0.name', $publicTravel->name);  
 
     }
 }
