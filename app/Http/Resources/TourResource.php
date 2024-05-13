@@ -15,6 +15,7 @@ class TourResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'travel_id' => $this->travel_id,
             'name' => $this->name,
             'starting_date' => $this->starting_date,
