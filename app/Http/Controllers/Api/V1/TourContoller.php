@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ToursListRequest;
 use App\Http\Resources\TourResource;
 use App\Models\Travel;
-use Illuminate\Http\Request;
+
 
 class TourContoller extends Controller
 {
@@ -14,6 +14,7 @@ class TourContoller extends Controller
 
     public function index (Travel $travel, ToursListRequest $request)
     {
+       
         $tours = $travel->tours()
                 ->when($request->dateFrom, function ($query) use ($request){
                     $query->where('starting_date', '>=', $request->dateFrom);

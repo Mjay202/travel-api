@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
 class ToursListRequest extends FormRequest
@@ -15,6 +17,10 @@ class ToursListRequest extends FormRequest
         return true;
     }
 
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -33,7 +39,7 @@ class ToursListRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages() : array
     {
         return [
             'priceFrom' => 'price should be a number',
