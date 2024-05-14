@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Tour::factory(10)->create(['travel_id' => '9c0474d7-a131-4fb7-9523-2180b4e6a122']);
+        
     }
 }

@@ -41,7 +41,6 @@ class CreateNewUser extends Command
 
         $this->error('Role not found');
         return -1;
-
         }
 
        DB::transactions(function () use($user, $role)
