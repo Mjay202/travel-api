@@ -6,6 +6,8 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class CreateNewUser extends Command
 {
@@ -43,13 +45,28 @@ class CreateNewUser extends Command
         return -1;
         }
 
-       DB::transactions(function () use($user, $role)
+        $validator = Validator::make($user, [
+            'name' => ['required', 'string', 'max:50'],
+            'email' => ['required', 'email', 'unique:'.User::class],
+            'password' => ['required', Password::defaults()],
+        ]);
+
+        if($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                $this->error($error);
+            }
+
+            return -1;
+        }
+
+       DB::transaction(function () use($user, $role)
        {
 
         $newUser= User::create($user);
         $newUser->roles()->attach($role->id);
        });
 
+       $this->info('User '.$user['name'].' has been succesfully created');
        return 0;
     }
 }
