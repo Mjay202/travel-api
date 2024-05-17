@@ -19,7 +19,7 @@ class TravelsListTest extends TestCase
     {
         Travel::factory(16)->create(['is_public' => true]);
 
-        $response = $this->get('/api/v1/travel');
+        $response = $this->get('/api/v1/travels');
 
         $response->assertStatus(200);
         $response->assertJsonCount(15, 'data');  
@@ -32,7 +32,7 @@ class TravelsListTest extends TestCase
         $publicTravel = Travel::factory()->create(['is_public' => true]);
         Travel::factory()->create(['is_public' => false]);
 
-        $response = $this->get('/api/v1/travel');
+        $response = $this->get('/api/v1/travels');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');  
