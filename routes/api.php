@@ -15,8 +15,9 @@ Route::get('travels', [TravelController::class, 'index']);
 
 Route::get('travels/{travel:slug}/tours', [TourContoller::class, 'index']);
 
-Route::prefix('admin')->group(function () {
+// Route::post('login', [LoginController::class, 'login']);
+
+
+Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::post('travels', [AdminTravelController::class, 'store']);
 });
-
-Route::post('/login', [LoginController::class, 'login']);
