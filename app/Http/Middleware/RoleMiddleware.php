@@ -17,8 +17,8 @@ class RoleMiddleware
     {
         if(! auth()->check())
         {
-            abort(401);
             // Not logged in
+            abort(401);
         }
     
         if(! $request->user()->roles()->where('name', $role)->exists())
