@@ -30,9 +30,6 @@ class LoginController extends Controller
         $curUser = $request->user();
        return response()->json([
             'access_token' => $user->createToken($device)->plainTextToken,
-            // 'user' => $user,
-            'curUser' => $curUser,
-            'user_token' => $request->bearerToken(),
         ]);
     }
 }
