@@ -27,7 +27,6 @@ class LoginController extends Controller
 
        
         $device = substr($request->userAgent()?? 0, 255);
-        $curUser = $request->user();
        return response()->json([
             'access_token' => $user->createToken($device)->plainTextToken,
         ]);
