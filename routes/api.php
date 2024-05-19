@@ -19,6 +19,6 @@ Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::get('login', [LoginController::class, 'login'])->name('login');
 
 
-Route::prefix('admin')->middleware(['auth:sanctum, role:admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('travels', [AdminTravelController::class, 'store']);
 });

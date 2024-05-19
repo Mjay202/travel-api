@@ -25,8 +25,10 @@ class RoleMiddleware
         {
             abort(403);
             // Not authorised
+
         }
 
         return $next($request);
+    
     }
 }
