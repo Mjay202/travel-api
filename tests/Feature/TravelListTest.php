@@ -44,4 +44,21 @@ class TravelListTest extends TestCase
 
         $response->assertStatus(422);
     }
+
+    public function test_admin_can_create_travels_successfully_with_valid_inputs(): void
+    {
+        $user = User::factory()->create();
+        $this->seed(RoleSeeder::class);
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
+
+        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels', [
+            'name' => 'new travel',
+            'description' => 'newTravel Description',
+            'number_of_days' => 12,
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment(['slug' => 'new-travel']);
+    }
 }
