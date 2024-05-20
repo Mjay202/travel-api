@@ -8,7 +8,7 @@ use App\Http\Resources\TourResource;
 use App\Models\Travel;
 
 
-class TourContoller extends Controller
+class TourController extends Controller
 {
     //
 
