@@ -26,4 +26,17 @@ class LoginTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure(['access_token']);
     }
+
+    public function test_login_returns_error_for_invalid_users(): void
+    {
+        $user = User::factory()->create();
+        
+        $response = $this->postJson('/api/v1/login', [
+            'email' => 'nonexistinguser@gmail.com',
+            'password' => 'incorrectpassword',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonMissingPath('access_token');
+    }
 }
