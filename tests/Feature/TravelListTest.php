@@ -33,4 +33,15 @@ class TravelListTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    public function test_admin_can_create_travels(): void
+    {
+        $user = User::factory()->create();
+        $this->seed(RoleSeeder::class);
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
+
+        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels');
+
+        $response->assertStatus(422);
+    }
 }
