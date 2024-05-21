@@ -20,7 +20,13 @@ Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::get('login', [LoginController::class, 'login'])->name('login');
 
 
-Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::post('travels', [AdminTravelController::class, 'store']);
-    Route::post('travels/{travel:slug}/tour', [AdminTourController::class, 'store']);
+Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
+    Route::middleware('role:admin')->group(function () {
+        Route::post('travels', [AdminTravelController::class, 'store']);
+        Route::post('travels/{travel:slug}/tour', [AdminTourController::class, 'store']);
+        
+    });
+
+    Route::put('travels/{travel}', [AdminTravelController::class, 'update'])->middleware('role:editor');
 });
+

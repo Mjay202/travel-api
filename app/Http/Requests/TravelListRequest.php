@@ -31,7 +31,7 @@ class TravelListRequest extends FormRequest
     {
         return [
             //
-            'is_public' => 'boolean',
+            // 'is_public' => 'boolean',
             'name'  => ['required', 'unique:travels'],
             'description'  => [ 'required'],
             'number_of_days'  => ['integer', 'required'],
@@ -42,7 +42,7 @@ class TravelListRequest extends FormRequest
     {
         return [
             'is_public' => 'boolean are only accepeted',
-            'name'  => 'name is required amd must be unique',
+            'name'  => 'name is required and must be unique',
             'description'  => 'description is required',
             'number_of_days'  => 'number of days must be an integer and it is required',
         ];

@@ -20,12 +20,13 @@ class RoleMiddleware
             // Not logged in
             abort(401);
         }
-    
-        if(! $request->user()->roles()->where('name', $role)->exists())
+        
+        $roles = explode(',', $role);
+        if(! ($request->user()->roles()->whereIn('name', $roles)->exists() || $request->user()->roles()->value('name') == 'admin'))
         {
             abort(403);
             // Not authorised
-
+           
         }
 
         return $next($request);
