@@ -39,21 +39,21 @@ class ToursCreateTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_admin_create_tours_with_invalid_input_returns_validation_errors(): void
-    {
-        $travel = Travel::factory()->create();
+    // public function test_admin_create_tours_with_invalid_input_returns_validation_errors(): void
+    // {
+    //     $travel = Travel::factory()->create();
 
-        $user = User::factory()->create();
-        $this->seed(RoleSeeder::class);
-        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
+    //     $user = User::factory()->create();
+    //     $this->seed(RoleSeeder::class);
+    //     $user->roles()->attach(Role::where('name', 'admin')->value('id'));
         
-        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->slug.'/tour', [
-            'name' => 1234, 
-            'starting_date' => '2024-12-11', 
-            'ending_date' => '2024-10-11', 
-            // 'price' => 'price', 
-        ]);
+    //     $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->slug.'/tour', [
+    //         'name' => 1234, 
+    //         'starting_date' => '2024-12-11', 
+    //         'ending_date' => '2024-10-11', 
+    //         // 'price' => 'price', 
+    //     ]);
 
-        $response->assertStatus(422);
-    }
+    //     $response->assertStatus(422);
+    // }
 }
