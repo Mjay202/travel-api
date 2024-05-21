@@ -18,7 +18,7 @@ class TourCreateRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json($validator->errors()), 422);
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
     /**
      * Get the validation rules that apply to the request.
