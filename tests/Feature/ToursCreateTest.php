@@ -56,4 +56,23 @@ class ToursCreateTest extends TestCase
 
         $response->assertStatus(422);
     }
+
+    public function test_admin_create_tours_returns_200_with_admin_inputing_valid_inputs(): void
+    {
+        $travel = Travel::factory()->create();
+
+        $user = User::factory()->create();
+        $this->seed(RoleSeeder::class);
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
+        
+        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->slug.'/tour', [
+            'name' => 'new tour', 
+            'starting_date' => '2024-10-11', 
+            'ending_date' => '2024-12-11', 
+            'price' => 3000, 
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJsonCount(1);
+    }
 }
