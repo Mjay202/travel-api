@@ -3,13 +3,14 @@
 namespace Tests\Feature;
 
 use App\Models\Role;
+use App\Models\Travel;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class TravelListTest extends TestCase
+class TravelsCreateUpdateTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -61,4 +62,41 @@ class TravelListTest extends TestCase
         $response->assertJsonCount(1);
         $response->assertJsonFragment(['slug' => 'new-travel']);
     }
+
+    public function test_admin_can_update_travels_successfully_with_valid_inputs(): void
+    {
+        $user = User::factory()->create();
+        $travel = Travel::factory()->create();
+        $this->seed(RoleSeeder::class);
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
+
+        $response = $this->actingAs($user)->putJson('/api/v1/admin/travels/'.$travel->id , [
+            'name' => 'new travel',
+            'description' => 'newTravel Description',
+            'number_of_days' => 12,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment(['name' => 'new travel']);
+    }
+
+    public function test_editor_can_update_travels_successfully_with_valid_inputs(): void
+    {
+        $user = User::factory()->create();
+        $travel = Travel::factory()->create();
+        $this->seed(RoleSeeder::class);
+        $user->roles()->attach(Role::where('name', '')->value('id'));
+
+        $response = $this->actingAs($user)->putJson('/api/v1/admin/travels/'.$travel->id , [
+            'name' => 'new travel',
+            'description' => 'newTravel Description',
+            'number_of_days' => 12,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment(['name' => 'new travel']);
+    }
+
 }
