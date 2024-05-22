@@ -17,10 +17,11 @@ class ToursListRequest extends FormRequest
         return true;
     }
 
-    protected function failedValidation (Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -35,11 +36,11 @@ class ToursListRequest extends FormRequest
             'dateTo' => 'date',
             'sortBy' => Rule::in(['price']),
             'sortOrder' => Rule::in(['asc', 'desc']),
-            
+
         ];
     }
 
-    public function messages() : array
+    public function messages(): array
     {
         return [
             'priceFrom' => 'price should be a number',

@@ -20,6 +20,7 @@ class TourCreateRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
+
     /**
      * Get the validation rules that apply to the request.
      *

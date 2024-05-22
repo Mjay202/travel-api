@@ -31,18 +31,19 @@ class CreateNewUser extends Command
     public function handle()
     {
         //
-       $user['name'] = $this->ask('What is the User name?');
-       $user['email'] = $this->ask('What is the User email?');
-       $user['password'] = $this->secret('What is the User password?');
-       
-       $roleName = $this->choice('What is the use role?', ['admin', 'editor', 'agent'], 2);
-       
-       $role= Role::where('name', $roleName)->first();
+        $user['name'] = $this->ask('What is the User name?');
+        $user['email'] = $this->ask('What is the User email?');
+        $user['password'] = $this->secret('What is the User password?');
 
-       if (!$role) { 
+        $roleName = $this->choice('What is the use role?', ['admin', 'editor', 'agent'], 2);
 
-        $this->error('Role not found');
-        return -1;
+        $role = Role::where('name', $roleName)->first();
+
+        if (! $role) {
+
+            $this->error('Role not found');
+
+            return -1;
         }
 
         $validator = Validator::make($user, [
@@ -51,7 +52,7 @@ class CreateNewUser extends Command
             'password' => ['required', Password::defaults()],
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
@@ -59,14 +60,14 @@ class CreateNewUser extends Command
             return -1;
         }
 
-       DB::transaction(function () use($user, $role)
-       {
+        DB::transaction(function () use ($user, $role) {
 
-        $newUser= User::create($user);
-        $newUser->roles()->attach($role->id);
-       });
+            $newUser = User::create($user);
+            $newUser->roles()->attach($role->id);
+        });
 
-       $this->info('User '.$user['name'].' has been succesfully created');
-       return 0;
+        $this->info('User '.$user['name'].' has been succesfully created');
+
+        return 0;
     }
 }

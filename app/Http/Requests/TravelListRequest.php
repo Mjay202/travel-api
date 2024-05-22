@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Travel;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\ValidationException;
 
 class TravelListRequest extends FormRequest
 {
@@ -18,10 +16,11 @@ class TravelListRequest extends FormRequest
         return true;
     }
 
-   protected function failedValidation (Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -32,19 +31,19 @@ class TravelListRequest extends FormRequest
         return [
             //
             // 'is_public' => 'boolean',
-            'name'  => ['required', 'unique:travels'],
-            'description'  => [ 'required'],
-            'number_of_days'  => ['integer', 'required'],
+            'name' => ['required', 'unique:travels'],
+            'description' => ['required'],
+            'number_of_days' => ['integer', 'required'],
         ];
     }
 
-    public function messages ():array
+    public function messages(): array
     {
         return [
             'is_public' => 'boolean are only accepeted',
-            'name'  => 'name is required and must be unique',
-            'description'  => 'description is required',
-            'number_of_days'  => 'number of days must be an integer and it is required',
+            'name' => 'name is required and must be unique',
+            'description' => 'description is required',
+            'number_of_days' => 'number of days must be an integer and it is required',
         ];
     }
 }

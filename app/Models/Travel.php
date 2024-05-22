@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -10,19 +11,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Travel extends Model
 {
-    use HasFactory, Sluggable, HasUuids;
+    use HasFactory, HasUuids, Sluggable;
 
-    protected $table = 'travels'; 
+    protected $table = 'travels';
 
     protected $fillable = [
         'is_public',
         'slug',
         'name',
         'description',
-       'number_of_days',
+        'number_of_days',
     ];
 
-     public function tours(): HasMany
+    public function tours(): HasMany
     {
         return $this->hasMany(Tour::class);
     }
@@ -32,8 +33,8 @@ class Travel extends Model
         return [
             'slug' => [
                 'source' => 'name',
-            ]
-            ];
+            ],
+        ];
     }
 
     public function numberOfNights(): Attribute
@@ -42,6 +43,4 @@ class Travel extends Model
             get: fn ($value, $attributes) => $attributes['number_of_days'] - 1
         );
     }
-
-   
 }

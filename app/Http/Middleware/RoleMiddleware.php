@@ -15,21 +15,19 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if(! auth()->check())
-        {
+        if (! auth()->check()) {
             // Not logged in
             abort(401);
         }
-        
+
         $roles = explode(',', $role);
-        if(! ($request->user()->roles()->whereIn('name', $roles)->exists() || $request->user()->roles()->value('name') == 'admin'))
-        {
+        if (! ($request->user()->roles()->whereIn('name', $roles)->exists() || $request->user()->roles()->value('name') == 'admin')) {
             abort(403);
             // Not authorised
-           
+
         }
 
         return $next($request);
-    
+
     }
 }

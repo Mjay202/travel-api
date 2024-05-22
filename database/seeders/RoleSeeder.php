@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
@@ -15,13 +14,13 @@ class RoleSeeder extends Seeder
     {
         //
         Role::create([
-            'name' => 'admin'
+            'name' => 'admin',
         ]);
         Role::create([
-            'name' => 'editor'
+            'name' => 'editor',
         ]);
         Role::create([
-            'name' => 'agent'
+            'name' => 'agent',
         ]);
     }
 }
