@@ -86,7 +86,7 @@ class TravelsCreateUpdateTest extends TestCase
         $user = User::factory()->create();
         $travel = Travel::factory()->create();
         $this->seed(RoleSeeder::class);
-        $user->roles()->attach(Role::where('name', '')->value('id'));
+        $user->roles()->attach(Role::where('name', 'editor')->value('id'));
 
         $response = $this->actingAs($user)->putJson('/api/v1/admin/travels/'.$travel->id , [
             'name' => 'new travel',
